@@ -1,33 +1,50 @@
-const classes = Array.from(document.querySelectorAll<HTMLDivElement>(".rsAptContent"))
+const COLORS = {
+  sameSubject: "#00000044",
+  selectedShift: "#ff0000aa",
+  coloredArray: ['#3cb44b', '#ffe119', '#4363d8', '#f58231', '#f032e6', '#008080', '#9a6324', '#aaffc3', '#808000',  '#000075', '#bcf60c'] 
+}
 
-const organizedClasses = classes.map((_class) => {
-  const classInfo = _class.innerText.split("\n")
+const extractedClasses = Array.from(document.querySelectorAll<HTMLDivElement>(".rsAptContent"))
+
+const classes = extractedClasses.map((_class) => {
+  const [subject, location, shift] = _class.innerText.split("\n")
 
   return {
-    subjectName: classInfo[0],
-    shift: classInfo[2],
+    subject,
+    location,
+    shift,
+
+    shiftType: shift.replace(/[^a-z]/gi, ''),
+    shiftNumber: Number(shift.replace(/[^1-9]/gi, '') || "1"),
+
     domElement: _class
   }
 })
 
-organizedClasses.forEach((selectedClass) => {
+classes.forEach(selectedClass => {
   selectedClass.domElement.addEventListener("mouseenter", () => {
-    organizedClasses.forEach((_class) => {
-      if (_class.subjectName == selectedClass.subjectName) {
-        
-					_class.domElement.style.backgroundColor = "rgba(0, 0, 0, 0.2)"
+    classes.forEach(_class => {
+      if (_class.subject == selectedClass.subject) {
 
-				if (_class.shift == selectedClass.shift) {
-					_class.domElement.style.backgroundColor = "rgba(100, 0, 0, 0.3)"
-				}
+          if (_class.shiftType == selectedClass.shiftType) {
 
+            if (_class.shiftNumber == selectedClass.shiftNumber) {
+              _class.domElement.style.backgroundColor = COLORS.selectedShift
+            } else {
+              _class.domElement.style.backgroundColor = COLORS.coloredArray[_class.shiftNumber - 1]
+            }
+            
+          } else {
+					  _class.domElement.style.backgroundColor = COLORS.sameSubject
+          }
       }
     })
   })
 
   selectedClass.domElement.addEventListener("mouseleave", () => {
-    organizedClasses.forEach((_class) => {
+    classes.forEach((_class) => {
       _class.domElement.style.backgroundColor = ""
+      _class.domElement.style.border = ""
     })
   })
 })
