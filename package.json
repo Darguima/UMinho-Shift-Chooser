@@ -1,0 +1,10 @@
+{
+  "name": "uminho-shift-chooser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  
+  "devDependencies": {
+    "web-ext": "^7.2.0"
+  }
+}
