@@ -1,4 +1,4 @@
-const classes = Array.from(document.getElementsByClassName("rsAptContent"))
+const classes = Array.from(document.querySelectorAll<HTMLDivElement>(".rsAptContent"))
 
 const organizedClasses = classes.map((_class) => {
   const classInfo = _class.innerText.split("\n")
@@ -9,7 +9,6 @@ const organizedClasses = classes.map((_class) => {
     domElement: _class
   }
 })
-
 
 organizedClasses.forEach((selectedClass) => {
   selectedClass.domElement.addEventListener("mouseenter", () => {

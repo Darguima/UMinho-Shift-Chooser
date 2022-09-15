@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 2,
 
-  "description": "UMinho Shift Chooser",
+  "description": "Extension to help you choosing your best shifts on Universidade do Minho.",
 
   "icons": {
     "48": "icons/um-48.png",
@@ -19,7 +19,7 @@
         "*://alunos.uminho.pt/EN/students/Pages/InfoUteisHorarios.aspx"
       ],
       "js": [
-        "src/index.js"
+        "dist/index.js"
       ]
     }
   ]

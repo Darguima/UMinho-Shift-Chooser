@@ -1,10 +1,19 @@
 {
   "name": "uminho-shift-chooser",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
+  "description": "Extension to help you choosing your best shifts on Universidade do Minho.",
+
+  "scripts": {
+    "dev-compile": "tsc -w",
+    "dev-install": "web-ext run",
+
+    "build": "tsc && web-ext build"
+  },
   
   "devDependencies": {
+    "typescript": "^4.8.3",
     "web-ext": "^7.2.0"
   }
 }
