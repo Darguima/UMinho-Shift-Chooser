@@ -1,6 +1,11 @@
 export {};
 
 declare global {
+	interface Time {
+		hour: number;
+		minute: number;
+	}
+
 	interface Class {
 		subject: string,
 		subjectParagraph: HTMLParagraphElement,
@@ -14,9 +19,11 @@ declare global {
 		shiftType: string,
 		shiftNumber: number,
 	
-		domElement: HTMLDivElement
+		domElement: HTMLDivElement,
 		parentElement: HTMLDivElement,
 
-		status: "normal" | "selected" | "hidden"
+		status: "normal" | "selected" | "hidden",
+		startTime: Time,
+		duration: Time
 	}
 }
