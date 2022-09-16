@@ -15,5 +15,8 @@ declare global {
 		shiftNumber: number,
 	
 		domElement: HTMLDivElement
+		parentElement: HTMLDivElement,
+
+		status: "normal" | "selected" | "hidden"
 	}
 }

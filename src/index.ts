@@ -1,7 +1,8 @@
 const COLORS = {
   sameSubject: "#00000044",
-  selectedShift: "#ff0000aa",
-  coloredArray: ['#3cb44b', '#ffe119', '#4363d8', '#f58231', '#f032e6', '#008080', '#9a6324', '#aaffc3', '#808000',  '#000075', '#bcf60c'] 
+  hoverShift: "#ff0000aa",
+  selectedShift: "#808000ff",
+  coloredArray: ['#3cb44b', '#ffe119', '#4363d8', '#f58231', '#f032e6', '#008080', '#9a6324', '#aaffc3',  '#000075', '#bcf60c'] 
 }
 
 const createParagraph = (text: string, parent: HTMLElement) => {
@@ -55,7 +56,10 @@ const main = () => {
       shiftType: shift.replace(/[^a-z]/gi, ''),
       shiftNumber: Number(shift.replace(/[^1-9]/gi, '') || "1"),
 
-      domElement: _class
+      domElement: _class,
+      parentElement: classContainer,
+
+      status: "normal"
     }
   })
 
@@ -70,12 +74,12 @@ const main = () => {
             if (_class.shiftType == selectedClass.shiftType) {
 
               if (_class.shiftNumber == selectedClass.shiftNumber) {
-                _class.domElement.style.backgroundColor = COLORS.selectedShift
+                _class.domElement.style.backgroundColor = COLORS.hoverShift
               } else {
                 _class.domElement.style.backgroundColor = COLORS.coloredArray[_class.shiftNumber - 1]
               }
 
-            } else {
+            } else if (selectedClass.status === "normal" && _class.status === "normal") {
               _class.domElement.style.backgroundColor = COLORS.sameSubject
             }
         }
@@ -84,11 +88,36 @@ const main = () => {
 
     selectedClass.domElement.addEventListener("mouseleave", () => {
       classes.forEach((_class) => {
-        _class.domElement.style.backgroundColor = ""
+        _class.domElement.style.backgroundColor = _class.status !== "selected" ? "" : COLORS.selectedShift
       })
     })
   })
 
+
+  classes.forEach(selectedClass => {
+    selectedClass.domElement.addEventListener("mouseup", () => {
+      
+      classes.forEach(_class => {
+        if (_class.subject == selectedClass.subject) {
+          if (_class.shiftType == selectedClass.shiftType) {
+            if (_class.shiftNumber == selectedClass.shiftNumber) {
+              _class.domElement.style.backgroundColor = COLORS.selectedShift
+              _class.parentElement.style.opacity = "1"
+  
+              _class.status = "selected"
+            } else {
+              _class.parentElement.style.opacity = "0.4"
+  
+              _class.status = "hidden"
+            }
+          } else {
+            _class.domElement.style.backgroundColor = ""
+          }
+          
+        }
+      })
+    })
+  })
 }
 
 main()

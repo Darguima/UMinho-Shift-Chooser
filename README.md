@@ -6,7 +6,10 @@ Install and open your schedule on UMinho website.
 
 #### Preview (Firefox)
 
-![screenshot](./readme/screenshot.png)
+![screenshot](./readme/demo.png)
+
+https://user-images.githubusercontent.com/49988070/190532973-ac16afd6-09c4-498b-bbcf-f4caec55c0e8.mp4
+
 
 ### Developing
 
