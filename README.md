@@ -2,7 +2,7 @@
 
 Extension to help you choosing your best shifts on Universidade do Minho.
 
-Install and open your schedule on UMinho website.
+Install and open your schedule on [UMinho website](https://alunos.uminho.pt/pt/estudantes/paginas/infouteishorarios.aspx).
 
 #### Preview (Firefox)
 
@@ -11,47 +11,64 @@ Install and open your schedule on UMinho website.
 https://user-images.githubusercontent.com/49988070/190532973-ac16afd6-09c4-498b-bbcf-f4caec55c0e8.mp4
 
 
-### Developing
+## Contribute
 
-##### Dependencies
+#### Dependencies
 
-To install dependencies run 
+Firstly install the projects dependencies.
 
 ``` bash
-$ npm install
-
-or
-
 $ yarn
 ```
 
-- - - 
+#### Developing
 
-Edit the file `src/index.ts` and run the two command at same time:
+All the typescript files are located at `./src`. 
+
+#### Linting
+
+This project use `EsLint`. To lint run next the script:
+
+```bash
+$ yarn lint
+```
+
+##### VS Code
+
+If you are developing in VS Code, follow [this guide](https://daveceddia.com/vscode-use-eslintrc/) to auto lint on save.
+
+#### Debugging
+
+While developing you can try and debug the extension.
+
+The first script (`dev-compile`) runs typescript on every file change.
+The second script (`dev-install`) runs web-ext on every file change.
+
+###### Run these commands in separated terminal sessions.
 
 ``` bash
-$ npm run dev-compile
-$ npm run dev-install
-
-or
-
 $ yarn dev-compile
 $ yarn dev-install
 ```
 
-The first (`dev-compile`) runs typescript on every file change.
-The second (`dev-install`) runs web-ext on every file change.
+## Build
 
-### Build
+At this moment the project is not available at any Add-on Store. So you need build it and install it manually.
 
-Run (after install [dependencies](#dependencies)):
+###### Don't forget to [install dependencies](#dependencies) first.
 
 ``` bash
-$ npm run build
-
-or
-
 $ yarn build
 ```
 
-Access `about:debugging#/runtime/this-firefox` on Firefox and click on `Load Temporary Add-on` and upload the generated .zip file from `web-ext-artifacts` folder.
+This will generate a `.zip` file in `./web-ext-artifacts`.
+
+#### Firefox
+
+To install it on Firefox, access `about:addons` and drag and drop the `.zip` file on this page.
+
+If for some reason this not work you can try install it temporarily, accessing `about:debugging#/runtime/this-firefox` and clicking on `Load Temporary Add-on` and uploading the `.zip` file.
+
+#### Google Chrome
+
+To install it on Chrome, access `chrome://extensions` and drag and drop the `.zip` file on this page.

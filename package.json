@@ -4,16 +4,23 @@
   "main": "dist/index.js",
   "license": "MIT",
   "description": "Extension to help you choosing your best shifts on Universidade do Minho.",
-
   "scripts": {
     "dev-compile": "tsc -w",
     "dev-install": "web-ext run",
 
-    "build": "tsc && web-ext build"
+    "lint": "eslint . --fix",
+
+    "build": "tsc && web-ext build --overwrite-dest"
   },
-  
   "devDependencies": {
-    "typescript": "^4.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "typescript": "*",
     "web-ext": "^7.2.0"
   }
 }
