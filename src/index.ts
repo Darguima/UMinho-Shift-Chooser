@@ -5,6 +5,10 @@ const COLORS = {
   coloredArray: ['#3cb44b', '#ffe119', '#4363d8', '#f58231', '#f032e6', '#008080', '#9a6324', '#aaffc3', '#000075', '#bcf60c']
 }
 
+enum WeekDay {
+  Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+}
+
 const createParagraph = (text: string, parent: HTMLElement): HTMLParagraphElement => {
   const paragraph = document.createElement('p')
 
@@ -51,67 +55,77 @@ const main = (): void => {
   const extractedRows = Array.from(document.querySelectorAll<HTMLTableRowElement>('.rsContentTable tr'))
 
   const classes: Class[] = extractedRows
-    .map((row, index) => {
+    .map((row, rowIndex) => {
       // elapsed time in minutes = index * 30 -> each row is a 30 min block
-      const startTime = incrementTime(firstTime, index * 30)
+      const startTime = incrementTime(firstTime, rowIndex * 30)
 
-      const extractedClasses: HTMLDivElement[] = Array.from(row.querySelectorAll<HTMLDivElement>('.rsApt'))
+      const extractedColumns: HTMLTableRowElement[] = Array.from(row.querySelectorAll<HTMLTableRowElement>('td'))
 
-      return extractedClasses.map(classContainer => {
-        const classInfo = Array.from(classContainer.querySelectorAll<HTMLDivElement>('.rsAptContent'))[0]
+      return extractedColumns.map((column, columnIndex) => {
+        const weekday: WeekDay = columnIndex
 
-        const [subject, location, shift] = classInfo.innerText.split('\n')
+        const extractedClasses: HTMLDivElement[] = Array.from(column.querySelectorAll<HTMLDivElement>(".rsApt"))
 
-        const _class = document.createElement('div')
+        return extractedClasses.map(classContainer => {
+          const classInfo = Array.from(classContainer.querySelectorAll<HTMLDivElement>('.rsAptContent'))[0]
 
-        classContainer.style.overflow = 'hidden'
-        classContainer.style.border = 'none'
-        classContainer.style.borderRight = '1px solid #444'
+          const [subject, location, shift] = classInfo.innerText.split('\n')
 
-        _class.style.height = '100%'
-        _class.style.width = '100%'
+          const _class = document.createElement('div')
 
-        _class.style.display = 'flex'
-        _class.style.flexDirection = 'column'
-        _class.style.alignItems = 'center'
-        _class.style.justifyContent = 'center'
+          classContainer.style.overflow = 'hidden'
+          classContainer.style.border = 'none'
+          classContainer.style.borderRight = '1px solid #444'
 
-        const durationInMinutes = ((classContainer.offsetHeight + 4) / cellHeight) * 30
+          _class.style.height = '100%'
+          _class.style.width = '100%'
 
-        const endTime = incrementTime(startTime, durationInMinutes)
+          _class.style.display = 'flex'
+          _class.style.flexDirection = 'column'
+          _class.style.alignItems = 'center'
+          _class.style.justifyContent = 'center'
 
-        const subjectParagraph = createParagraph(subject, _class)
-        const locationParagraph = createParagraph(location, _class)
-        const shiftParagraph = createParagraph(shift, _class)
-        const timeParagraph = createParagraph(`${zeroPad(startTime.hour, 2)}:${zeroPad(startTime.minute, 2)} - ${zeroPad(endTime.hour, 2)}:${zeroPad(endTime.minute, 2)}`, _class)
+          const durationInMinutes = ((classContainer.offsetHeight + 4) / cellHeight) * 30
 
-        classContainer.replaceChildren(_class)
+          const endTime = incrementTime(startTime, durationInMinutes)
 
-        return {
-          subject,
-          subjectParagraph,
+          const subjectParagraph = createParagraph(subject, _class)
+          const locationParagraph = createParagraph(location, _class)
+          const shiftParagraph = createParagraph(shift, _class)
+          const timeParagraph = createParagraph(`${zeroPad(startTime.hour, 2)}:${zeroPad(startTime.minute, 2)} - ${zeroPad(endTime.hour, 2)}:${zeroPad(endTime.minute, 2)}`, _class)
+          const weekdayParagraph = createParagraph(`${WeekDay[weekday]}`, _class)
+          console.log(WeekDay[weekday])
 
-          location,
-          locationParagraph,
+          classContainer.replaceChildren(_class)
 
-          shift,
-          shiftParagraph,
+          return {
+            subject,
+            subjectParagraph,
 
-          startTime,
-          endTime,
-          timeParagraph,
+            location,
+            locationParagraph,
 
-          shiftType: shift.replace(/[^a-z]/gi, ''),
-          shiftNumber: Number(shift.replace(/^\D+/g, '') || '1'),
+            shift,
+            shiftParagraph,
 
-          domElement: _class,
-          parentElement: classContainer,
+            startTime,
+            endTime,
+            timeParagraph,
 
-          status: 'normal' as const
-        }
-      })
-    })
-    .flat(1)
+            weekday,
+            weekdayParagraph,
+
+            shiftType: shift.replace(/[^a-z]/gi, ''),
+            shiftNumber: Number(shift.replace(/^\D+/g, '') || '1'),
+
+            domElement: _class,
+            parentElement: classContainer,
+
+            status: 'normal' as const
+          }
+        }).flat(1)
+      }).flat(1)
+    }).flat(1)
 
   console.log(classes)
 

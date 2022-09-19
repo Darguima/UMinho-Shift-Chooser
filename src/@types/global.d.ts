@@ -20,6 +20,9 @@ declare global {
     endTime: Time
     timeParagraph: HTMLParagraphElement
 
+    weekday: WeekDay
+    weekdayParagraph: HTMLParagraphElement
+
     shiftType: string
     shiftNumber: number
 
