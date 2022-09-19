@@ -1,6 +1,18 @@
 export {}
 
 declare global {
+  interface HDVTScheduleBlock {
+    id: string
+    startTime: Time
+    duration: Time
+  }
+
+  interface HDVTSubject {
+    shortName: string
+    longName: string
+    color: number
+  }
+
   interface Time {
     hour: number
     minute: number

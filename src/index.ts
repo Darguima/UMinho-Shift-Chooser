@@ -29,7 +29,72 @@ const incrementTime = (initialTime: Time, elapsedTimeInMinutes: number): Time =>
   }
 }
 
+const subTime = (lhs: Time, rhs: Time): Time => {
+  const lhsInMinutes = (lhs.hour * 60 + lhs.minute)
+  const rhsInMinutes = (rhs.hour * 60 + rhs.minute)
+  return {
+    hour: Math.floor((lhsInMinutes - rhsInMinutes) / 60),
+    minute: (lhsInMinutes - rhsInMinutes) % 60
+  }
+}
+
 const zeroPad = (num: number, places: number): string => String(num).padStart(places, '0')
+
+const shorten = (subject: string): string => {
+  return subject.split(' ').filter(name => name.length > 2 && name.charAt(0) === name.charAt(0).toUpperCase()).map(name =>
+    name.charAt(0).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  ).join('')
+}
+
+const toJavaWeekDay = (weekday: WeekDay): number => {
+  return weekday + 2 % 7
+}
+
+const exportHDVT = (classes: Class[]): string => {
+  const schedule: { [weekday: number]: [HDVTScheduleBlock] } = {}
+  const subjects: { [id: string]: HDVTSubject } = {}
+
+  classes.forEach(class_ => {
+    if (class_.status === 'selected') {
+      const shortName = shorten(class_.subject)
+      if (!(shortName in subjects)) {
+        subjects[shortName] = { shortName, longName: class_.subject, color: -16777216 }
+      }
+      const javaWeekDay = toJavaWeekDay(class_.weekday)
+      const startTime = class_.startTime
+      const duration = subTime(class_.endTime, class_.startTime)
+      if (!schedule[javaWeekDay]) schedule[javaWeekDay] = [{ id: shortName, startTime, duration }]
+      else schedule[javaWeekDay].push({ id: shortName, startTime, duration })
+    }
+  })
+
+  return JSON.stringify(schedule) + '|' + JSON.stringify(subjects)
+}
+
+const setupHDVTExportButton = (): HTMLButtonElement | undefined => {
+  const printButtonContainer = document.querySelector<HTMLDivElement>('#ctl00_ctl40_g_e84a3962_8ce0_47bf_a5c3_d5f9dd3927ef_ctl00_divPrint')
+
+  if (printButtonContainer === undefined) {
+    return undefined
+  }
+
+  const buttons = printButtonContainer?.querySelectorAll<HTMLButtonElement>('.btn')
+
+  if (buttons === undefined || buttons?.length === 0) {
+    return undefined
+  } else if (buttons?.length === 1) {
+    // create button
+    const exportHDVTButton = buttons[0]?.cloneNode(true) as HTMLButtonElement
+    const exportHDVTButtonLabel = exportHDVTButton.querySelector<HTMLLabelElement>('#ctl00_ctl40_g_e84a3962_8ce0_47bf_a5c3_d5f9dd3927ef_ctl00_lblPrint')
+
+    if (exportHDVTButtonLabel) exportHDVTButton.innerText = 'Exportar  Ficheiro HDVT'
+
+    printButtonContainer?.appendChild(exportHDVTButton)
+    return exportHDVTButton
+  }
+
+  return buttons[2] // button already exists
+}
 
 const main = (): void => {
   const cellHeight = document.querySelector<HTMLTableRowElement>('.rsContentTable tr')?.offsetHeight
@@ -64,7 +129,7 @@ const main = (): void => {
       return extractedColumns.map((column, columnIndex) => {
         const weekday: WeekDay = columnIndex
 
-        const extractedClasses: HTMLDivElement[] = Array.from(column.querySelectorAll<HTMLDivElement>(".rsApt"))
+        const extractedClasses: HTMLDivElement[] = Array.from(column.querySelectorAll<HTMLDivElement>('.rsApt'))
 
         return extractedClasses.map(classContainer => {
           const classInfo = Array.from(classContainer.querySelectorAll<HTMLDivElement>('.rsAptContent'))[0]
@@ -123,11 +188,24 @@ const main = (): void => {
 
             status: 'normal' as const
           }
-        }).flat(1)
-      }).flat(1)
-    }).flat(1)
+        })
+      })
+    }).flat(2)
 
   console.log(classes)
+
+  const exportHDVTButton = setupHDVTExportButton()
+  if (exportHDVTButton === undefined) {
+    alert('UMinho Shift Chooser - Error creating export HDVT file button. Extension running with limited functionality!')
+  } else {
+    exportHDVTButton.onclick = (): void => {
+      const text = exportHDVT(classes)
+      const tempLink = document.createElement('a')
+      tempLink.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+      tempLink.setAttribute('download', 'data.hdvt')
+      tempLink.click()
+    }
+  }
 
   classes.forEach(selectedClass => {
     selectedClass.domElement.addEventListener('mouseenter', () => {
