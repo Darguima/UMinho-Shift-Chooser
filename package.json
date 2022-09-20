@@ -8,9 +8,13 @@
     "dev-compile": "tsc -w",
     "dev-install": "web-ext run",
 
+    "prepare": "husky install",
     "lint": "eslint . --fix",
-
+    
     "build": "tsc && web-ext build --overwrite-dest"
+  },
+  "lint-staged": {
+    "*.(js|ts)": "eslint --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -20,7 +24,9 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "lint-staged": "^13.0.3",
     "typescript": "*",
-    "web-ext": "^7.2.0"
+    "web-ext": "^7.2.0",
+    "husky": "^8.0.0"
   }
 }
