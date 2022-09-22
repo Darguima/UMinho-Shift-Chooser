@@ -5,6 +5,7 @@ declare global {
     id: string
     startTime: Time
     duration: Time
+    more: string
   }
 
   interface HDVTSubject {

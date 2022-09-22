@@ -63,8 +63,9 @@ const exportHDVT = (classes: Class[]): string => {
       const javaWeekDay = toJavaWeekDay(class_.weekday)
       const startTime = class_.startTime
       const duration = subTime(class_.endTime, class_.startTime)
-      if (!schedule[javaWeekDay]) schedule[javaWeekDay] = [{ id: shortName, startTime, duration }]
-      else schedule[javaWeekDay].push({ id: shortName, startTime, duration })
+      const more = class_.location.substring(15, 23)
+      if (!schedule[javaWeekDay]) schedule[javaWeekDay] = [{ id: shortName, startTime, duration, more }]
+      else schedule[javaWeekDay].push({ id: shortName, startTime, duration, more })
     }
   })
 
