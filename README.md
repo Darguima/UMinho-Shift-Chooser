@@ -33,6 +33,8 @@ This project use `EsLint`. To lint run next the script:
 $ yarn lint
 ```
 
+Also husky is configured to on each commit lint the staged files.
+
 ##### VS Code
 
 If you are developing in VS Code, follow [this guide](https://daveceddia.com/vscode-use-eslintrc/) to auto lint on save.
@@ -41,14 +43,17 @@ If you are developing in VS Code, follow [this guide](https://daveceddia.com/vsc
 
 While developing you can try and debug the extension.
 
-The first script (`dev-compile`) runs typescript on every file change.
-The second script (`dev-install`) runs web-ext on every file change.
+The first script (`start:babel`) runs babel on every file change.
+The second script (`start:firefox` or `start:chromium`) runs web-ext on every file change.
 
 ###### Run these commands in separated terminal sessions.
 
 ``` bash
-$ yarn dev-compile
-$ yarn dev-install
+$ yarn start:babel
+
+$ yarn start:firefox
+or
+$ yarn start:chromium
 ```
 
 ## Build

@@ -5,18 +5,26 @@
   "license": "MIT",
   "description": "Extension to help you choosing your best shifts on Universidade do Minho.",
   "scripts": {
-    "dev-compile": "tsc -w",
-    "dev-install": "web-ext run",
+    "babel": "babel --extensions .ts,.js ./src -d ./dist --copy-files",
+    "start:babel": "yarn babel --watch",
+    
+    "start:firefox": "web-ext run --start-url https://alunos.uminho.pt/pt/estudantes/paginas/infouteishorarios.aspx",
+    "start:chromium": "web-ext run --start-url https://alunos.uminho.pt/pt/estudantes/paginas/infouteishorarios.aspx -t chromium",
 
     "prepare": "husky install",
+
     "lint": "eslint . --fix",
-    
-    "build": "tsc && web-ext build --overwrite-dest"
+
+    "build": "yarn babel && web-ext build --overwrite-dest"
   },
   "lint-staged": {
     "*.(js|ts)": "eslint --fix"
   },
   "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-typescript": "^7.18.6",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.37.0",
     "eslint": "^8.0.1",
@@ -24,9 +32,9 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "typescript": "*",
-    "web-ext": "^7.2.0",
-    "husky": "^8.0.0"
+    "web-ext": "^7.2.0"
   }
 }
