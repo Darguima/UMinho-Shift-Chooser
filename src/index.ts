@@ -63,8 +63,9 @@ const exportHDVT = (classes: Class[]): string => {
       const javaWeekDay = toJavaWeekDay(class_.weekday)
       const startTime = class_.startTime
       const duration = subTime(class_.endTime, class_.startTime)
-      if (!schedule[javaWeekDay]) schedule[javaWeekDay] = [{ id: shortName, startTime, duration }]
-      else schedule[javaWeekDay].push({ id: shortName, startTime, duration })
+      const more = class_.location.substring(15, 23)
+      if (!schedule[javaWeekDay]) schedule[javaWeekDay] = [{ id: shortName, startTime, duration, more }]
+      else schedule[javaWeekDay].push({ id: shortName, startTime, duration, more })
     }
   })
 
@@ -84,10 +85,12 @@ const setupHDVTExportButton = (): HTMLButtonElement | undefined => {
     return undefined
   } else if (buttons?.length === 1) {
     // create button
-    const exportHDVTButton = buttons[0]?.cloneNode(true) as HTMLButtonElement
-    const exportHDVTButtonLabel = exportHDVTButton.querySelector<HTMLLabelElement>('#ctl00_ctl40_g_e84a3962_8ce0_47bf_a5c3_d5f9dd3927ef_ctl00_lblPrint')
-
-    if (exportHDVTButtonLabel) exportHDVTButton.innerText = 'Exportar  Ficheiro HDVT'
+    const exportHDVTButton = document.createElement('button')
+    exportHDVTButton.classList.add('btn')
+    exportHDVTButton.classList.add('btn-default')
+    exportHDVTButton.classList.add('btn-sm')
+    exportHDVTButton.type = 'button'
+    exportHDVTButton.innerText = 'Exportar  Ficheiro HDVT'
 
     printButtonContainer?.appendChild(exportHDVTButton)
     return exportHDVTButton
