@@ -1,5 +1,8 @@
+import { render } from 'lit-html'
+import Schedule from '../components/Schedule'
+
 const scheduleDrawer = (classes: Class[]): void => {
-  const container = document.querySelector('#section-to-print')
+  const container = document.querySelector<HTMLDivElement>('#section-to-print')
 
   if (container === null) {
     alert('UMinho Shift Chooser - Error getting the #section-to-print on DOM. Extension disabled!')
@@ -14,10 +17,7 @@ const scheduleDrawer = (classes: Class[]): void => {
     alert('UMinho Shift Chooser - Error getting the schedule on DOM. Some visual errors can happen!')
   } else oldSchedule.remove()
 
-  const scheduleContainer = document.createElement('div')
-  scheduleContainer.classList.add('scheduleContainer')
-  scheduleContainer.innerText = 'Here will be a schedule!'
-  container.appendChild(scheduleContainer)
+  render(Schedule(), container)
 }
 
 export default scheduleDrawer
