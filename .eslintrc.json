@@ -22,7 +22,8 @@
     ],
 
     "rules": {
-        "@typescript-eslint/strict-boolean-expressions": 0
+        "@typescript-eslint/strict-boolean-expressions": 0,
+        "@typescript-eslint/no-var-requires": 0
     },
 
     "ignorePatterns": ["/dist", "/node_modules"]

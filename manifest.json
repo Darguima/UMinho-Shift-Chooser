@@ -19,7 +19,7 @@
         "*://alunos.uminho.pt/EN/students/Pages/InfoUteisHorarios.aspx"
       ],
       "js": [
-        "dist/index.js"
+        "dist/bundle.js"
       ]
     }
   ]
