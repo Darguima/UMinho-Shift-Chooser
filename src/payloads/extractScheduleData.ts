@@ -1,7 +1,7 @@
-import incrementTime from './utils/incrementTime'
+import incrementTime from '../utils/incrementTime'
 
-import WeekDay from './constants/WeekDay'
-import nameShortener from './utils/nameShortener'
+import WeekDay from '../constants/WeekDay'
+import nameShortener from '../utils/nameShortener'
 
 export default (): Class[] | undefined => {
   const cellHeight = document.querySelector<HTMLTableRowElement>('.rsContentTable tr')?.offsetHeight

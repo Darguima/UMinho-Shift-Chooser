@@ -1,11 +1,14 @@
-import extractScheduleData from './extractScheduleData'
+import extractScheduleData from './payloads/extractScheduleData'
+import scheduleDrawer from './payloads/scheduleDrawer'
+
+import './styles/schedule.css'
 
 const main = (): void => {
   const classes = extractScheduleData()
 
   if (classes === undefined) return
 
-  console.log(classes)
+  scheduleDrawer(classes)
 }
 
 main()
