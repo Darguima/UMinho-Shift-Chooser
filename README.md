@@ -43,13 +43,13 @@ If you are developing in VS Code, follow [this guide](https://daveceddia.com/vsc
 
 While developing you can try and debug the extension.
 
-The first script (`start:babel`) runs babel on every file change.
+The first script (`start:webpack`) runs babel on every file change.
 The second script (`start:firefox` or `start:chromium`) runs web-ext on every file change.
 
 ###### Run these commands in separated terminal sessions.
 
 ``` bash
-$ yarn start:babel
+$ yarn start:webpack
 
 $ yarn start:firefox
 or
