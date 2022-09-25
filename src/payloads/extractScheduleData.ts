@@ -1,6 +1,7 @@
-import incrementTime from '../utils/incrementTime'
-
 import WeekDay from '../constants/WeekDay'
+
+import incrementTime from '../utils/incrementTime'
+import { convertMinutesToTime } from '../utils/convertTime'
 import nameShortener from '../utils/nameShortener'
 
 export default (): Class[] | undefined => {
@@ -22,7 +23,7 @@ export default (): Class[] | undefined => {
 
   const firstTime: Time = {
     hour: +firstHourOnSchedule[0],
-    minute: +firstHourOnSchedule[1]
+    minutes: +firstHourOnSchedule[1]
   }
 
   const extractedRows = Array.from(document.querySelectorAll<HTMLTableRowElement>('.rsContentTable tr'))
@@ -45,10 +46,7 @@ export default (): Class[] | undefined => {
           const [subject, location, shift] = classInfo.innerText.split('\n')
 
           const durationInMinutes = ((classContainer.offsetHeight + 4) / cellHeight) * 30
-          const duration: Time = {
-            hour: Math.floor(durationInMinutes / 60),
-            minute: durationInMinutes % 60
-          }
+          const duration = convertMinutesToTime(durationInMinutes)
 
           const endTime = incrementTime(startTime, durationInMinutes)
 

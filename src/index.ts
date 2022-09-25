@@ -1,6 +1,8 @@
 import extractScheduleData from './payloads/extractScheduleData'
 import scheduleDrawer from './payloads/scheduleDrawer'
 
+import organizeClassesToSchedule from './utils/organizeClassesToSchedule'
+
 import './styles/schedule.css'
 
 const main = (): void => {
@@ -8,7 +10,9 @@ const main = (): void => {
 
   if (classes === undefined) return
 
-  scheduleDrawer(classes)
+  const scheduleData = organizeClassesToSchedule(classes)
+
+  scheduleDrawer(scheduleData)
 }
 
 main()

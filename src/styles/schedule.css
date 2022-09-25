@@ -3,12 +3,52 @@
 }
 
 .scheduleContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	
 	width: 100%;
-	height: 100px;
 
-	background-color: #bbbbbb;
+	padding: 8px;
+
+	background-color: #ffffff;
+}
+
+.scheduleTable {
+}
+
+.tableHeader {
+	padding: 8px 6px;
+
+	border: 4px solid #ffffff;
+	
+	background-color: #cccccc;
+}
+
+.columnHeader {
+	text-align: center;
+}
+
+.timeHeader {
+}
+
+.weekdayHeader {
+	width: 20%;
+}
+
+.classesRows {
+	height: 100px;
+}
+
+.rowHeader {
+}
+
+.classCell {
+	height: 100%;
+	padding: 2px;
+
+	overflow: hidden;
+}
+
+.classContainer {
+	height: 100%;
+	width: 100%;
+
+	background-color: #dedede;
 }

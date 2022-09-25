@@ -1,7 +1,7 @@
 import { render } from 'lit-html'
 import Schedule from '../components/Schedule'
 
-const scheduleDrawer = (classes: Class[]): void => {
+const scheduleDrawer = (scheduleData: ScheduleClassesObject): void => {
   const container = document.querySelector<HTMLDivElement>('#section-to-print')
 
   if (container === null) {
@@ -17,7 +17,7 @@ const scheduleDrawer = (classes: Class[]): void => {
     alert('UMinho Shift Chooser - Error getting the schedule on DOM. Some visual errors can happen!')
   } else oldSchedule.remove()
 
-  render(Schedule(), container)
+  render(Schedule(scheduleData), container)
 }
 
 export default scheduleDrawer

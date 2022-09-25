@@ -20,8 +20,20 @@ declare global {
     status: 'normal' | 'selected' | 'hidden'
   }
 
+  interface ScheduleClassesObject {
+    [startTime: number]: ScheduleRowClassesObject
+  }
+
+  type ScheduleRowClassesObject = [
+    Class[], // Monday Classes
+    Class[], // Tuesday Classes
+    Class[], // Wednesday Classes
+    Class[], // Thursday Classes
+    Class[], // Friday Classes
+  ]
+
   interface Time {
     hour: number
-    minute: number
+    minutes: number
   }
 }
