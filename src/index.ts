@@ -1,11 +1,12 @@
-import extractScheduleData from './extractScheduleData'
+import extractScheduleData from './payloads/extractScheduleData'
+import workingWithSchedule from './payloads/workingWithSchedule'
 
 const main = (): void => {
   const classes = extractScheduleData()
 
   if (classes === undefined) return
 
-  console.log(classes)
+  workingWithSchedule(classes)
 }
 
 main()

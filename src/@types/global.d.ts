@@ -2,6 +2,9 @@ export {}
 
 declare global {
   interface Class {
+    classContainer: HTMLDivElement
+    classDiv: HTMLDivElement
+
     subject: string
     location: string
     shift: string
@@ -22,6 +25,6 @@ declare global {
 
   interface Time {
     hour: number
-    minute: number
+    minutes: number
   }
 }
