@@ -32,6 +32,9 @@ const workingWithSchedule = (classes: Class[]): void => {
     const style = document.createElement('style')
     document.head.appendChild(style)
 
+    const selectedStyle = document.createElement('style')
+    document.head.appendChild(selectedStyle)
+
     // if (selectedClass.status === 'normal' && _class.status === 'normal') {
     //   _class.domElement.style.backgroundColor = COLORS.sameSubject
     // }
@@ -58,6 +61,27 @@ const workingWithSchedule = (classes: Class[]): void => {
 
     classDiv.addEventListener('mouseleave', () => {
       style.textContent = ''
+    })
+
+    classDiv.addEventListener('mouseup', () => {
+      classes.forEach(checkClass => {
+        if (checkClass.subject === _class.subject) {
+          if (checkClass.shiftType === _class.shiftType) {
+            if (checkClass.shiftNumber === _class.shiftNumber) {
+              checkClass.classDiv.style.backgroundColor = Colors.selectedShift
+              checkClass.classContainer.style.opacity = '1'
+
+              checkClass.status = 'selected'
+            } else {
+              checkClass.classContainer.style.opacity = '0.4'
+
+              checkClass.status = 'hidden'
+            }
+          } else {
+            checkClass.classDiv.style.backgroundColor = ''
+          }
+        }
+      })
     })
   })
 }
